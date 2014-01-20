@@ -7,14 +7,14 @@
 
 # These are absolute paths without slashes, for example /storage/sdcard1 is storagesdcard1, because you can't use / in variables
 fs="ext4" # Filesystem
-efs="/dev/block/mmcblk0p3" # EFS, if available
-boot="/dev/block/mmcblk0p5" # ROM's kernel image
-recovery="/dev/block/mmcblk0p6" # Recovery image
-radio="/dev/block/mmcblk0p7" # Modem image
-cache="/dev/block/mmcblk0p8" # Cache partition
-system="/dev/block/mmcblk0p9" # System partition
-preload="/dev/block/mmcblk0p10" # Preload partition (also SELinux)
-data="/dev/block/mmcblk0p12" # Data and internal memory
+efs="/dev/block/mmcblk0p7" # EFS, if available
+boot="/dev/block/mmcblk0p15" # ROM's kernel image
+recovery="/dev/block/mmcblk0p17" # Recovery image
+radio="???" # Modem image
+cache="/dev/block/mmcblk0p4" # Cache partition
+system="/dev/block/mmcblk0p3" # System partition
+preload="/dev/block/mmcblk0p9" # Preload partition (also SELinux)
+data="/dev/block/mmcblk0p5" # Data and internal memory
 storagesdcard1="/dev/block/mmcblk1p1" # External memory, if available
 AUTO="/efs /system /cache /preload /data /storage/sdcard1" # Filesystems which should be mounted automatically when no argument is given, typically every partition excluding images
 

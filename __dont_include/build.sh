@@ -189,7 +189,7 @@ cat $FILE >> $FILEO
 cp $FILEO $FILE
 rm $FILEO
 
-sed -i 's/ro.sf.lcd_density=320/#ro.sf.lcd_density=320/g' $FILE
+sed -i 's/ro.sf.lcd_density=240/#ro.sf.lcd_density=240/g' $FILE
 
 if [ $SAMMY -eq 1 ]; then
 	sed -i 's/S_Over_the_horizon.ogg/09_Underwater_world.ogg/g' $FILE

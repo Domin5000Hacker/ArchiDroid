@@ -8,9 +8,9 @@
 ###############################################################
 ui_print(">>> ArchiDroid is now loading...");
 #sleep (1);
-assert(getprop("ro.product.device") == "m0" || getprop("ro.build.product") == "m0" || 
-       getprop("ro.product.device") == "i9300" || getprop("ro.build.product") == "i9300" || 
-       getprop("ro.product.device") == "GT-I9300" || getprop("ro.build.product") == "GT-I9300" || abort("This package is for \"m0,i9300,GT-I9300\" devices; this is a \"" + getprop("ro.product.device") + "\"."););
+assert(getprop("ro.product.device") == "janice" || getprop("ro.build.product") == "janice" || 
+       getprop("ro.product.device") == "i9070" || getprop("ro.build.product") == "i9070" || 
+       getprop("ro.product.device") == "GT-I9070" || getprop("ro.build.product") == "GT-I9070" || abort("This package is for \"janice,i9070,GT-I9070\" devices; this is a \"" + getprop("ro.product.device") + "\"."););
 ui_print("<b><#ff0000>root</#><#ecec36>@</#><#0cdfdf>ArchiDroid</#><#ecec36>:~</#><#c00cdf>#</#></b> Ready!");
 set_progress(0.01);
 #sleep (2);
@@ -99,6 +99,7 @@ set_progress(0.51);
 
 ui_print("<b><#ff0000>root</#><#ecec36>@</#><#0cdfdf>ArchiDroid</#><#ecec36>:~</#><#c00cdf>#</#></b> Creating symlinks");
 
+symlink("../xbin/su", "/system/bin/su");
 symlink("Roboto-Bold.ttf", "/system/fonts/DroidSans-Bold.ttf");
 symlink("Roboto-Regular.ttf", "/system/fonts/DroidSans.ttf");
 symlink("busybox", "/system/xbin/[", "/system/xbin/[[",
@@ -177,9 +178,11 @@ symlink("busybox", "/system/xbin/[", "/system/xbin/[[",
         "/system/xbin/yes",
         "/system/xbin/zcat");
 symlink("libGLESv2.so", "/system/lib/libGLESv3.so");
+symlink("logcat", "/system/bin/lolcat");
 symlink("mksh", "/system/bin/sh");
 symlink("mount.exfat", "/system/bin/fsck.exfat",
         "/system/bin/mkfs.exfat");
+symlink("pigz", "/system/xbin/unpigz");
 symlink("toolbox", "/system/bin/cat", "/system/bin/chcon",
         "/system/bin/chmod", "/system/bin/chown", "/system/bin/clear",
         "/system/bin/cmp", "/system/bin/cp", "/system/bin/date",
@@ -195,15 +198,16 @@ symlink("toolbox", "/system/bin/cat", "/system/bin/chcon",
         "/system/bin/mv", "/system/bin/nandread", "/system/bin/netstat",
         "/system/bin/newfs_msdos", "/system/bin/notify", "/system/bin/printenv",
         "/system/bin/ps", "/system/bin/r", "/system/bin/readlink",
-        "/system/bin/renice", "/system/bin/restorecon", "/system/bin/rm",
-        "/system/bin/rmdir", "/system/bin/rmmod", "/system/bin/route",
-        "/system/bin/runcon", "/system/bin/schedtop", "/system/bin/sendevent",
-        "/system/bin/setconsole", "/system/bin/setenforce",
-        "/system/bin/setprop", "/system/bin/setsebool", "/system/bin/sleep",
-        "/system/bin/smd", "/system/bin/start", "/system/bin/stop",
-        "/system/bin/swapoff", "/system/bin/swapon", "/system/bin/sync",
-        "/system/bin/top", "/system/bin/touch", "/system/bin/umount",
-        "/system/bin/uptime", "/system/bin/vmstat", "/system/bin/watchprops",
+        "/system/bin/renice", "/system/bin/restart", "/system/bin/restorecon",
+        "/system/bin/rm", "/system/bin/rmdir", "/system/bin/rmmod",
+        "/system/bin/route", "/system/bin/runcon", "/system/bin/schedtop",
+        "/system/bin/sendevent", "/system/bin/setconsole",
+        "/system/bin/setenforce", "/system/bin/setfattr", "/system/bin/setprop",
+        "/system/bin/setsebool", "/system/bin/sleep", "/system/bin/smd",
+        "/system/bin/start", "/system/bin/stop", "/system/bin/swapoff",
+        "/system/bin/swapon", "/system/bin/sync", "/system/bin/top",
+        "/system/bin/touch", "/system/bin/umount", "/system/bin/uptime",
+        "/system/bin/vmstat", "/system/bin/watchprops",
         "/system/bin/wipe");
 
 set_progress(0.52);
@@ -221,11 +225,11 @@ set_progress(0.53);
 
 ui_print("<b><#ff0000>root</#><#ecec36>@</#><#0cdfdf>ArchiDroid</#><#ecec36>:~</#><#c00cdf>#</#></b> Setting Permissions");
 set_metadata_recursive("/system", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata_recursive("/system/addon.d", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata_recursive("/system/bin", "uid", 0, "gid", 2000, "dmode", 0755, "fmode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/bin/app_process", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:zygote_exec:s0");
 set_metadata("/system/bin/clatd", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:clatd_exec:s0");
 set_metadata("/system/bin/debuggerd", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:debuggerd_exec:s0");
-set_metadata("/system/xbin/debuggerd", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:debuggerd_exec:s0");
 set_metadata("/system/bin/dhcpcd", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:dhcp_exec:s0");
 set_metadata("/system/bin/dnsmasq", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:dnsmasq_exec:s0");
 set_metadata("/system/bin/drmserver", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:drmserver_exec:s0");
@@ -252,16 +256,11 @@ set_metadata("/system/etc/dhcpcd/dhcpcd-run-hooks", "uid", 1014, "gid", 2000, "m
 set_metadata_recursive("/system/etc/init.d", "uid", 0, "gid", 2000, "dmode", 0755, "fmode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/etc/init.d", "uid", 0, "gid", 0, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata_recursive("/system/etc/ppp", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0555, "capabilities", 0x0, "selabel", "u:object_r:ppp_system_file:s0");
-set_metadata_recursive("/system/vendor", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:firmware_camera:s0");
 set_metadata("/system/vendor", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
-set_metadata_recursive("/system/vendor/etc", "uid", 0, "gid", 2000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
-set_metadata("/system/vendor/etc/audio_effects.conf", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
-set_metadata("/system/vendor/firmware", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:firmware_camera:s0");
-set_metadata("/system/vendor/firmware/mfc_fw.bin", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:firmware_mfc:s0");
-set_metadata_recursive("/system/vendor/lib", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
-set_metadata("/system/vendor/lib", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
-set_metadata_recursive("/system/vendor/lib/drm", "uid", 0, "gid", 2000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
-set_metadata("/system/vendor/lib/drm/libdrmwvmplugin.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/etc", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/firmware", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata_recursive("/system/vendor/lib", "uid", 0, "gid", 2000, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
+set_metadata("/system/vendor/lib/libbt-vendor.so", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata_recursive("/system/xbin", "uid", 0, "gid", 2000, "dmode", 0755, "fmode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/xbin/librank", "uid", 0, "gid", 0, "mode", 06755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/xbin/procmem", "uid", 0, "gid", 0, "mode", 06755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
@@ -281,12 +280,12 @@ set_progress(0.54);
 #################
 if file_getprop("/tmp/aroma-data/archidroidinstallmode.prop","preset") == "barebones" then
         ui_print("<b><#ff0000>root</#><#ecec36>@</#><#0cdfdf>ArchiDroid</#><#ecec36>:~</#><#c00cdf>#</#></b> Flashing Stock Kernel");
-        package_extract_file("boot.img", "/dev/block/mmcblk0p5");
-        ui_print("<b><#ff0000>root</#><#ecec36>@</#><#0cdfdf>ArchiDroid</#><#ecec36>:~</#><#c00cdf>#</#></b> Applying 320 DPI");
-        package_extract_file("_archidroid/dpi/320dpi.sh", "/tmp/320dpi.sh");
-        set_perm(0, 0, 0777, "/tmp/320dpi.sh");
-        run_program("/tmp/320dpi.sh");
-		delete("tmp/320dpi.sh");
+        package_extract_file("boot.img", "/dev/block/mmcblk0p15");
+        ui_print("<b><#ff0000>root</#><#ecec36>@</#><#0cdfdf>ArchiDroid</#><#ecec36>:~</#><#c00cdf>#</#></b> Applying 240 DPI");
+        package_extract_file("_archidroid/dpi/240dpi.sh", "/tmp/240dpi.sh");
+        set_perm(0, 0, 0777, "/tmp/240dpi.sh");
+        run_program("/tmp/240dpi.sh");
+		delete("tmp/240dpi.sh");
         ui_print("<b><#ff0000>root</#><#ecec36>@</#><#0cdfdf>ArchiDroid</#><#ecec36>:~</#><#c00cdf>#</#></b> Installing Stock Keyboard");
 else
 	##############
